@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Moving Sale</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    <!-- handlebars -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"></script>
+</head>
+<style type="text/css">
+    nav .brand-logo{
+        margin-left: 10px;
+    }
+    .sale-item{
+        margin-top: 50px;
+    }
+
+</style>
+
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper purple lighten-3">
+                <a href="#!" class="brand-logo">Hannah + Elliott's Moving Sale</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Reserve Item</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- Modal Trigger -->
+    
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Reserve your item</h4>
+            <p><iframe src=" insert google spreadsheet here " width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok!</a>
+        </div>
+    </div>
+    <div class="container">
+        <!-- <h1>Joey + Deirdre"s Moving Sale</h1> -->
+        <!-- Page Content goes here -->
+        <!-- <img src=""> -->
+        <div id="sale-items" class="row col s12 l12 m12"></div>
+        "></a>
+    </div>
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    var url = "moving-sale-table.csv"
+    d3.csv(url, function(res) {
+        // res.feed.entry.forEach(function(d){
+        //     console.log(d.content["$t"]);   
+        // })
+        console.log(res);
+        res.forEach(function(d) {
+            // console.log("img/"+d.image);
+
+            if (d.available == "yes") {
+                var output = " <div class='col s12 m12 l12 sale-item'> \
+                    <h4>" + d.name + "</h4> \
+                    <p>What: <b> " + d.type + "</b></p> \
+                    <p>$: <b>" + d.price + "</b></p> \
+                    <p>condition: <b> " + d.condition + "</b></p> \
+                    <p>product link: <b>" + d.link + "</b></p> \
+                    <p>additional link: <b>" + d.altlink + "</b></p> \
+                    <p>quantity: <b>" + d.quantity + "</b></p> \
+                    <p>comments: <b>" + d.comments + "</b></p> \
+                    </div> ";
+                $("#sale-items").append(output);
+                if(d.image){
+                    console.log("img/"+d.image);
+                    $("#sale-items").append("<img class='responsive-img' src='img/"+ d.image + "'>");
+                }
+            }
+
+        })
+
+
+
+
+    })
+
+    $(".modal-trigger").leanModal();
+
+
+    // var url = "https://spreadsheets.google.com/feeds/list/1NbcYTqDIeE24z3nK9C--2KYSxqRBgf7wR1SCwYXI0Hk/od6/public/basic?alt=csv"
+    // d3.json(url, function(res){
+    //  console.log(res);
+    // })
+
+});
+</script>
+
+</html>
